@@ -1,0 +1,50 @@
+.swiperWrap {
+  position: relative;
+
+  .swiper {
+    height: 400px;
+    .swiperItem {
+      .img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  .backPicsWrap {
+    z-index: -1;
+    width: 100%;
+    height: 400px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    .img {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  .pointWrap {
+    position: absolute;
+    right: 46px;
+    bottom: 20px;
+    display: flex;
+    z-index: 10;
+    .point {
+      width: 14px;
+      height: 14px;
+      background: rgba(0,0,0,0.5000);
+      margin-right: 10px;
+      border-radius: 50%;
+      &.active {
+        background: #fff;
+      }
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

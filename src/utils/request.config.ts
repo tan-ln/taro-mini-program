@@ -30,7 +30,6 @@ export const HTTP_STATUS = {
 };
 
 export const HTTP_STATUS_MAP = new Map([
-  ['200', '成功'],
   ['400', '请求参数错误'],
   ['401', '需要鉴权'],
   ['403', '没有权限访问'],

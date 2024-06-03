@@ -39,7 +39,7 @@
   ],
   "author": "",
   "dependencies": {
-    "@babel/runtime": "^7.21.5",
+    "@babel/runtime": "^7.24.6",
     "@tarojs/components": "3.6.30",
     "@tarojs/helper": "3.6.30",
     "@tarojs/plugin-framework-vue3": "3.6.30",
@@ -54,21 +54,23 @@
     "@tarojs/runtime": "3.6.30",
     "@tarojs/shared": "3.6.30",
     "@tarojs/taro": "3.6.30",
-    "vue": "^3.0.0"
+    "dayjs": "^1.11.11",
+    "taro": "^0.0.7",
+    "vue": "^3.4.27"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.0",
+    "@babel/core": "^7.24.6",
     "@tarojs/cli": "3.6.30",
     "@tarojs/taro-loader": "3.6.30",
     "@tarojs/test-utils-vue3": "^0.1.1",
     "@tarojs/webpack5-runner": "3.6.30",
     "@types/jest": "^29.3.1",
-    "@types/node": "^18.15.11",
+    "@types/node": "^20.13.0",
     "@types/webpack-env": "^1.13.6",
     "@typescript-eslint/eslint-plugin": "^6.2.0",
     "@typescript-eslint/parser": "^6.2.0",
-    "@vue/babel-plugin-jsx": "^1.0.6",
-    "@vue/compiler-sfc": "^3.0.0",
+    "@vue/babel-plugin-jsx": "^1.2.2",
+    "@vue/compiler-sfc": "^3.4.27",
     "babel-preset-taro": "3.6.30",
     "css-loader": "3.4.2",
     "eslint": "^8.12.0",
@@ -82,7 +84,7 @@
     "ts-node": "^10.9.1",
     "tsconfig-paths-webpack-plugin": "^4.1.0",
     "typescript": "^5.1.0",
-    "vue-loader": "^17.1.0",
+    "vue-loader": "^17.4.2",
     "webpack": "5.78.0"
   }
 }

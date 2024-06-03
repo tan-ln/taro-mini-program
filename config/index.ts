@@ -98,13 +98,13 @@ export default defineConfig(async (merge, { command, mode }) => {
   }
   const customerConfig = {
     alias: {
-      '@/utils': path.resolve(__dirname, '..', 'src/components')
+      '@': path.resolve(__dirname, '../src'),
     }
   }
   if (process.env.NODE_ENV === 'development') {
     // 本地开发构建配置（不混淆压缩）
-    return merge({}, baseConfig, devConfig)
+    return merge({}, baseConfig, devConfig, customerConfig)
   }
   // 生产构建配置（默认开启压缩混淆等）
-  return merge({}, baseConfig, prodConfig)
+  return merge({}, baseConfig, prodConfig, customerConfig)
 })
