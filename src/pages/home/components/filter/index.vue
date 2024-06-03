@@ -3,9 +3,6 @@
     id="homeFilter"
     :catchMove="showPanelFilter"
     :class="[showPanelFilter && styles.onShowFilter]"
-    :style="{
-      top: pageTitleHeight + 'px'
-    }"
     >
     <panel-wrapper
       v-model:active="showPanelFilter"
@@ -40,6 +37,7 @@ import styles from './index.module.less'
 import { getElementRect } from '@/utils'
 import { changeScrollStatus, changeScrollHeight } from '@/hooks/usePageScrollEffect'
 import { onMounted } from 'vue'
+import { swiperEffect } from '../../utils'
 
 type TabItem = {
   label: string
@@ -80,6 +78,8 @@ export default defineComponent({
     const showPanelFilter = ref<boolean>(false)
     const { tabList } = tabEffect()
     const pageTitleHeight = ref<number>(0)
+    
+    const swiperHeight = swiperEffect()
 
     const onOpen = () => {
       console.log('onOpen')
@@ -101,7 +101,8 @@ export default defineComponent({
 
     watch(showPanelFilter, (val) => {
       if (val) {
-        changeScrollHeight(pageTitleHeight.value)
+        changeScrollHeight(swiperHeight.value - pageTitleHeight.value)
+        // setScrollToViewElement('#homeFilter')
       }
       changeScrollStatus(!val)
     }, {

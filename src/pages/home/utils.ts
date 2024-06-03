@@ -1,3 +1,6 @@
+import { ref, } from 'vue'
+import { useReady, createSelectorQuery, NodesRef } from '@tarojs/taro'
+import { getGlobalData } from '@/utils/globalData'
 import dayjs from "dayjs"
 
 export const platform_map = [
@@ -129,3 +132,19 @@ export const calcResidueTime = (endTime) => {
     return `${day}天${hour}小时`;
   }
 };
+
+export const swiperEffect = () => {
+  const swiperHeight = ref(0)
+  useReady(() => {
+  if (!getGlobalData('douyinControl')) {
+      createSelectorQuery()
+        .select('#swiperWrapper')
+        .boundingClientRect((res: NodesRef.BoundingClientRectCallbackResult) => {
+          console.log(res)
+          swiperHeight.value = res?.bottom
+        })
+        .exec();
+    }
+  })
+  return swiperHeight
+}

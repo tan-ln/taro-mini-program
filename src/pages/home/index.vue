@@ -2,6 +2,9 @@
   <scroll-view
     :scroll-y="enableScroll"
     :scroll-top="scrollHeight"
+    :scroll-with-animation="true"
+    :scroll-animation-duration="200"
+    scroll-into-view-alignment="end"
     :style="{
       width: '100%',
       height: '100%'
@@ -14,7 +17,7 @@
       :class="styles.pageTitle"
       :style="{
         ...topNavSearchBarStyle,
-        position: scrollTop >= 1 ? 'fixed' : 'absolute',
+        position: scrollTop >= 5 || scrollHeight ? 'fixed' : 'absolute',
         backgroundColor: `rgba(246, 246, 246, ${searchTitleBgRate})`,
       }"
     >
@@ -42,14 +45,15 @@
 
 <script lang="ts">
 import { ref, reactive, watch } from 'vue'
-import { useReady, createSelectorQuery, NodesRef } from '@tarojs/taro'
+import { useReady, createSelectorQuery } from '@tarojs/taro'
 import { getGlobalData } from '@/utils/globalData'
 import request from '@/utils/request'
 import swiperWrapper from './components/swiper/index.vue'
 import cardList from './components/cardList/index.vue'
 import filterWrapper from './components/filter/index.vue'
-import { enableScroll, scrollTop, scrollHeight, onScroll } from '@/hooks/usePageScrollEffect'
+import { enableScroll, scrollTop, scrollHeight, onScroll, onScrollEnd } from '@/hooks/usePageScrollEffect'
 import { Params, Card, CardListResult } from './types'
+import { swiperEffect } from './utils'
 import styles from './index.module.less'
 
 const fetchCardList = (params: Params) => {
@@ -110,9 +114,10 @@ const searchTitleEffect = () => {
   })
 
   watch(scrollTop, () => {
-    if (ENV === 'tt') {
+    if (ENV === 'tt' || scrollHeight) {
       searchTitleBgRate.value = max
     }
+
     if (scrollTop.value <= 10) {
       searchTitleBgRate.value = min;
     } else if (scrollTop.value >= swiperHeight.value - searchTitleHeight.value) {
@@ -122,25 +127,11 @@ const searchTitleEffect = () => {
         scrollTop.value / (swiperHeight.value - searchTitleHeight.value)
       );
     }
+  }, {
+    flush: 'pre'
   })
 
   return searchTitleBgRate
-}
-
-const swiperEffect = () => {
-  const swiperHeight = ref(0)
-  useReady(() => {
-  if (!getGlobalData('douyinControl')) {
-      createSelectorQuery()
-        .select('#swiperWrapper')
-        .boundingClientRect((res: NodesRef.BoundingClientRectCallbackResult) => {
-          console.log(res)
-          swiperHeight.value = res?.bottom
-        })
-        .exec();
-    }
-  })
-  return swiperHeight
 }
 
 export default {
@@ -176,7 +167,8 @@ export default {
       scrollHeight,
       searchTitleBgRate,
       enableScroll,
-      onScroll
+      onScroll,
+      onScrollEnd
     }
   },
   methods: {
