@@ -5,6 +5,7 @@
     :scroll-with-animation="true"
     :scroll-animation-duration="200"
     scroll-into-view-alignment="end"
+    :using-sticky="true"
     :style="{
       width: '100%',
       height: '100%'
@@ -17,7 +18,6 @@
       :class="styles.pageTitle"
       :style="{
         ...topNavSearchBarStyle,
-        position: scrollTop >= 5 || scrollHeight ? 'fixed' : 'absolute',
         backgroundColor: `rgba(246, 246, 246, ${searchTitleBgRate})`,
       }"
     >
@@ -28,12 +28,12 @@
     </view>
 
     <!-- 轮播图 -->
-    <view v-if="ENV === 'weapp'" id="swiperWrapper">
+    <view v-if="ENV === 'weapp'" id="swiperWrapper" :style="{ marginTop: (searchTitleHeight * -1) + 'px' }">
       <swiper-wrapper />
     </view>
 
     <!-- 筛选 -->
-    <filter-wrapper></filter-wrapper>
+    <filter-wrapper v-model:params="params"></filter-wrapper>
 
     <card-list
       :data="cardList"
@@ -47,23 +47,14 @@
 import { ref, reactive, watch } from 'vue'
 import { useReady, createSelectorQuery } from '@tarojs/taro'
 import { getGlobalData } from '@/utils/globalData'
-import request from '@/utils/request'
 import swiperWrapper from './components/swiper/index.vue'
 import cardList from './components/cardList/index.vue'
 import filterWrapper from './components/filter/index.vue'
 import { enableScroll, scrollTop, scrollHeight, onScroll, onScrollEnd } from '@/hooks/usePageScrollEffect'
-import { Params, Card, CardListResult } from './types'
+import { Params, Card } from './types'
 import { swiperEffect } from './utils'
 import styles from './index.module.less'
-
-const fetchCardList = (params: Params) => {
-  return request<CardListResult>({
-    url: '/anon/annunciate/list',
-    data: {
-      ...params
-    }
-  })
-}
+import { fetchCardList } from '@/service/home'
 
 const cardListEffect = () => {
   const params = reactive<Params>({
@@ -83,6 +74,7 @@ const cardListEffect = () => {
   })
 
   return {
+    params,
     cardList
   }
 }
@@ -120,18 +112,18 @@ const searchTitleEffect = () => {
 
     if (scrollTop.value <= 10) {
       searchTitleBgRate.value = min;
-    } else if (scrollTop.value >= swiperHeight.value - searchTitleHeight.value) {
+    } else if (scrollTop.value >= swiperHeight.value - searchTitleHeight.value * 2) {
       searchTitleBgRate.value = max;
     } else {
       searchTitleBgRate.value = (
-        scrollTop.value / (swiperHeight.value - searchTitleHeight.value)
+        scrollTop.value / (swiperHeight.value - searchTitleHeight.value * 2)
       );
     }
   }, {
     flush: 'pre'
   })
 
-  return searchTitleBgRate
+  return { searchTitleBgRate, searchTitleHeight }
 }
 
 export default {
@@ -147,7 +139,7 @@ export default {
     // 导航栏的高度
     const navHeight = getGlobalData('navHeight');
 
-    const searchTitleBgRate = searchTitleEffect()
+    const { searchTitleBgRate, searchTitleHeight } = searchTitleEffect()
 
     const topNavSearchBarStyle: Record<string | number, string | number>  = {
       height: ENV === 'weapp'
@@ -157,14 +149,16 @@ export default {
         ENV === 'weapp' ? `${statusHeight - 4}px` : 0,
     }
 
-    const { cardList } = cardListEffect()
+    const { params, cardList } = cardListEffect()
     return {
       styles,
       topNavSearchBarStyle,
       ENV,
+      params,
       cardList,
       scrollTop,
       scrollHeight,
+      searchTitleHeight,
       searchTitleBgRate,
       enableScroll,
       onScroll,

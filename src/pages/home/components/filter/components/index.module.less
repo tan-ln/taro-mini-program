@@ -1,0 +1,130 @@
+.platformList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+
+  .platformItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 24px;
+    .logo {
+      width: 56px;
+      height: 56px;
+      margin-bottom: 10px;
+    }
+    .platformText {
+      font-size: 20px;
+      color: #666;
+    }
+  }
+}
+
+.areaFilterWrapper {
+  display: flex;
+  flex-direction: column;
+  .searchArea {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    background: #f8f8f8;
+    border-radius: 32px;
+    margin-bottom: 30px;
+    overflow: hidden;
+    .searchIcon {
+      color: #b8b8b8;
+      font-size: 32px;
+      margin-left: 26px;
+      margin-right: 12px;
+    }
+    .searchAreaInput {
+      flex: 1;
+      font-size: 26px;
+    }
+    .placeholderStyle {
+      height: 48px;
+      font-size: 26px;
+      color: #B9B9B9;
+    }
+  }
+
+  .buttonWrapper {
+    padding: 20px 32px 0;
+    background: #FFFFFF;
+    border-radius: 0px 0px 24px 24px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -32px;
+      right: -32px;
+      height: 2px;
+      background-color: #F6F6F6;
+    }
+
+    .resetButton {
+      width: 30vw;
+      height: 72px;
+      border-radius: 36px;
+      border: 2px solid #ECECEC;
+      line-height: 68px;
+      text-align: center;
+      color: #333333;
+    }
+    .confirmButton {
+      width: 50vw;
+      height: 72px;
+      background: linear-gradient(270deg, #FF043A 0%, #FF456E 100%);
+      border-radius: 36px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .buttonText {
+      margin-right: 12px;
+    }
+    .selectCount {
+      background-color: #fff;
+      border-radius: 50%;
+      width: 26px;
+      height: 26px;
+      line-height: 26px;
+      text-align: center;
+      font-size: 20px;
+      color: #FF4C61;
+    }
+  }
+}
+.areaList {
+  box-sizing: border-box;
+  flex: 1;
+  max-height: 40vh;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  grid-gap: 5vw;
+
+  .areaItem {
+    background-color: #f8f7f7;
+    color: #666;
+    font-size: 20px;
+    text-align: center;
+    border-radius: 20px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  .activeAreaItem {
+    background: #FEF2F3;
+    color: #FD023E;
+  }
+}

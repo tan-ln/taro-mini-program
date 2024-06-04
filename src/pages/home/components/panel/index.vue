@@ -1,7 +1,7 @@
 <template>
   <view :class="[styles.panelWrapper]">
     <!-- 触发区域 -->
-    <view :class="styles.panelTrigger" @tap="onClickTrigger">
+    <view :class="styles.panelTrigger" @tap="onClickTrigger(true)">
       <slot name="trigger"></slot>
     </view>
     <!-- 内容区域 -->
@@ -13,7 +13,7 @@
       </view>
     </transition>
     <!-- 遮罩 -->
-    <view v-if="open" :class="styles.panelMask" @tap="onClickTrigger"></view>
+    <view v-if="open" :class="styles.panelMask" @tap="onClickTrigger(false)"></view>
   </view>
 </template>
 
@@ -36,8 +36,8 @@ const emit = defineEmits(['update:active', 'onOpen', 'onOpened', 'onClose', 'onC
 const open = ref<boolean>(props.active)
 const timer = ref<NodeJS.Timeout>()
 
-const onClickTrigger = () => {
-  emit('update:active', !props.active)
+const onClickTrigger = (val) => {
+  emit('update:active', val)
 }
 
 watch(() => props.active,  (val) => {

@@ -5,29 +5,41 @@ import dayjs from "dayjs"
 
 export const platform_map = [
   {
+    type: 0,
+    title: '全部',
+    iconUrl: require('@/assets/images/icon/allPlatform.png'),
+    roundIconUrl: require('@/assets/images/icon/allPlatform.png'),
+  },
+  {
     type: 1,
     title: '小红书',
-    iconUrl: require('@/assets/images/home_smallred.png')
+    iconUrl: require('@/assets/images/home_smallred.png'),
+    roundIconUrl: require('@/assets/images/icon/home-xhs.png'),
   },
   {
     type: 2,
     title: '抖音',
-    iconUrl: require('@/assets/images/home_douyin.png')
+    iconUrl: require('@/assets/images/home_douyin.png'),
+    roundIconUrl: require('@/assets/images/icon/home-douyin.png'),
   },
   {
     type: 3,
     title: '微信',
-    iconUrl: require('@/assets/images/icon/weChart.png')
+    iconUrl: require('@/assets/images/icon/weChart.png'),
+    roundIconUrl: require('@/assets/images/icon/weChart.png'),
   },
   {
     type: 4,
     title: '微博',
-    iconUrl: require('@/assets/images/home_weibo.png')
+    iconUrl: require('@/assets/images/home_weibo.png'),
+    roundIconUrl: require('@/assets/images/icon/home-weibo.png'),
   },
   {
     type: 5,
     title: 'Bilibili',
-    iconUrl: require('@/assets/images/home_bilibili.png')
+    alias: 'B站',
+    iconUrl: require('@/assets/images/home_bilibili.png'),
+    roundIconUrl: require('@/assets/images/icon/home-bilibili.png'),
   },
 ]
 
@@ -140,7 +152,6 @@ export const swiperEffect = () => {
       createSelectorQuery()
         .select('#swiperWrapper')
         .boundingClientRect((res: NodesRef.BoundingClientRectCallbackResult) => {
-          console.log(res)
           swiperHeight.value = res?.bottom
         })
         .exec();
